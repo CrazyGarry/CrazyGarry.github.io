@@ -1,283 +1,159 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garry's Gems | Game Portfolio</title>
-    <!-- Подключаем современный шрифт -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --android-color: #3DDC84;
-            --yandex-color: #FFCC00;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Garry's Gems — Игры</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 80px 20px 64px;
+    }
+    .logo-wrap { display: inline-block; position: relative; }
+    .logo {
+      font-family: var(--font-display);
+      font-size: clamp(58px, 11vw, 114px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      background: linear-gradient(130deg, var(--gem1) 0%, var(--gem2) 50%, var(--gem3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(0,240,255,.3));
+      animation: pulse-logo 4s ease-in-out infinite;
+    }
+    @keyframes pulse-logo {
+      0%,100% { filter: drop-shadow(0 0 28px rgba(0,240,255,.3)); }
+      50%      { filter: drop-shadow(0 0 48px rgba(177,79,255,.5)); }
+    }
+    .logo-sub {
+      font-size: clamp(11px, 2vw, 14px);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .gem-deco {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      animation: float 3s ease-in-out infinite;
+    }
+    .gem-deco:nth-child(1) { background:var(--gem1); top:4px;  left:-24px; animation-delay:0s; }
+    .gem-deco:nth-child(2) { background:var(--gem2); top:18px; right:-24px;animation-delay:.8s; }
+    .gem-deco:nth-child(3) { background:var(--gem3); bottom:0; left:12px;  animation-delay:1.6s;}
+    @keyframes float {
+      0%,100% { transform:rotate(45deg) translateY(0); }
+      50%      { transform:rotate(45deg) translateY(-6px); }
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0c29;
-            /* Анимированный градиент на фоне */
-            background: radial-gradient(circle at top right, #24243e, #302b63, #0f0c29);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Декоративные круги на фоне */
-        .bg-blob {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            background: #764ba2;
-            filter: blur(120px);
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0.2;
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-20%, -20%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        header {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 900;
-            letter-spacing: -2px;
-            background: linear-gradient(to right, #fff, #a5a5a5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-        }
-
-        .subtitle {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            padding: 40px 20px;
-            z-index: 1;
-        }
-
-        section {
-            margin-bottom: 80px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        h2::after {
-            content: "";
-            height: 1px;
-            flex-grow: 1;
-            background: linear-gradient(to right, var(--glass-border), transparent);
-        }
-
-        /* Сетка игр */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 30px;
-        }
-
-        /* Карточка игры */
-        .game-card {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
-            opacity: 0;
-            transition: 0.4s;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .game-card:hover::before {
-            opacity: 1;
-        }
-
-        .game-icon {
-            width: 120px;
-            height: 120px;
-            border-radius: 22px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .game-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        /* Бейджи для платформ */
-        .badge {
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-top: 8px;
-            background: rgba(255,255,255,0.1);
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .android-section h2 { color: var(--android-color); }
-        .yandex-section h2 { color: var(--yandex-color); }
-
-        footer {
-            padding: 60px 20px;
-            color: rgba(255,255,255,0.3);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* Адаптация под телефоны */
-        @media (max-width: 600px) {
-            header { padding-top: 40px; }
-            .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            .game-icon { width: 100%; height: auto; aspect-ratio: 1/1; }
-        }
-    </style>
+    /* ── SECTION SPACING ── */
+    .games-section { margin-bottom: 72px; }
+    .android-icon  { background: linear-gradient(135deg,#1db954,#0a7a38); }
+    .yandex-icon   { background: linear-gradient(135deg,#ff6900,#c93a00); }
+  </style>
 </head>
 <body>
 
-    <div class="bg-blob"></div>
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-logo" href="index.html">Garry's Gems</a>
+  <div class="nav-links">
+    <a href="index.html#android">Mobile</a>
+    <a href="index.html#yandex">Web</a>
+  </div>
+</nav>
 
-    <header>
-        <p class="subtitle">Indie Game Dev</p>
-        <h1>Garry's Gems</h1>
-    </header>
+<!-- HERO -->
+<div class="hero">
+  <div class="logo-wrap">
+    <div class="gem-deco"></div>
+    <div class="gem-deco"></div>
+    <div class="gem-deco"></div>
+    <div class="logo">Garry's Gems</div>
+  </div>
+  <p class="logo-sub">Indie Game Developer</p>
+</div>
 
-    <div class="container">
-        
-        <!-- Раздел Android -->
-        <section class="android-section">
-            <h2>Android Apps</h2>
-            <div class="games-grid">
-                
-                <a href="https://play.google.com/store/apps/details?id=com.garrysgems.trivia.maestro.millionaire.quiz" target="_blank" class="game-card">
-                    <img src="https://play-lh.googleusercontent.com/hLSLqa8v01jEZukWzm77jlxAetdvflIokonWgkrVq8vDaE0mndNdjQNFgMioeAPhcKE=s256-rw" alt="Icon" class="game-icon">
-                    <span class="game-title">Maestro Millionaire</span>
-                    <span class="badge" style="color: var(--android-color)">Google Play</span>
-                </a>
+<main class="page-wrap">
 
-                <a href="https://play.google.com/store/apps/details?id=com.garrysgems.pandakenthrowingshuriken" target="_blank" class="game-card">
-                    <img src="https://play-lh.googleusercontent.com/DRTTG5JP9V59y7rA54T86a6HC7Q-eor7kys1sVml_LeLGIEzAaCvbj64M-ALs7K-LYk=s256-rw" alt="Icon" class="game-icon">
-                    <span class="game-title">Panda Ken Throwing Shuriken</span>
-                    <span class="badge" style="color: var(--android-color)">Google Play</span>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- Раздел Яндекс Игры -->
-        <section class="yandex-section">
-            <h2>Яндекс Игры</h2>
-            <div class="games-grid">
-                
-                <a href="#" class="game-card">
-                    <img src="https://picsum.photos/seed/gem3/300/300" alt="Icon" class="game-icon">
-                    <span class="game-title">Gems 2048</span>
-                    <span class="badge" style="color: var(--yandex-color)">WEB / HTML5</span>
-                </a>
-
-                <a href="#" class="game-card">
-                    <img src="https://picsum.photos/seed/gem4/300/300" alt="Icon" class="game-icon">
-                    <span class="game-title">Jewel Match</span>
-                    <span class="badge" style="color: var(--yandex-color)">WEB / HTML5</span>
-                </a>
-
-                <a href="#" class="game-card">
-                    <div class="game-icon" style="background: #222; display: flex; align-items: center; justify-content: center; font-size: 2rem;">💎</div>
-                    <span class="game-title">Coming Soon</span>
-                    <span class="badge">In Dev</span>
-                </a>
-
-            </div>
-        </section>
-
+  <!-- ANDROID -->
+  <section class="games-section android-section reveal" id="android">
+    <div class="section-header">
+      <!-- <div class="section-icon android-icon">🤖</div> -->
+      <h2 class="section-title">Mobile</h2>
+      <div class="section-line"></div>
     </div>
+    <div class="game-grid" id="android-grid"></div>
+  </section>
 
-    <footer>
-        &copy; 2026 GARRY'S GEMS. MADE WITH PASSION.
-    </footer>
+  <!-- ЯНДЕКС -->
+  <section class="games-section yandex-section reveal" id="yandex">
+    <div class="section-header">
+      <!-- <div class="section-icon yandex-icon">🎯</div> -->
+      <h2 class="section-title">Web</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="game-grid" id="yandex-grid"></div>
+  </section>
 
-    <script>
-        // Плавное появление карточек при прокрутке
-        const observerOptions = {
-            threshold: 0.1
-        };
+</main>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, observerOptions);
+<footer class="site-footer">
+  <!-- <div class="footer-links">
+    <a href="terms.html">Terms of Use</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div> -->
+  © 2026 <span>Garry's Gems</span> · All rights reversed
+</footer>
 
-        document.querySelectorAll('.game-card').forEach(card => {
-            card.style.opacity = "0";
-            card.style.transform = "translateY(20px)";
-            card.style.transition = "all 0.6s ease-out";
-            observer.observe(card);
-        });
-    </script>
+<script src="main.js"></script>
+<script>
+/* ── GAME DATA ──
+   icon:  путь к картинке (png/jpg/webp)
+   Замените "images/gem-blaster.png" на реальные пути к иконкам.
+   Ссылка ведёт на страницу описания игры.
+*/
+const androidGames = [
+  { name: "Maestro Millionaire Quiz",   icon: "maestro-millionaire-quiz/playstore-icon.png",  url: "maestro-millionaire-quiz/game.html"  },
+  { name: "Panda Ken Throwing Shuriken",    icon: "https://play-lh.googleusercontent.com/DRTTG5JP9V59y7rA54T86a6HC7Q-eor7kys1sVml_LeLGIEzAaCvbj64M-ALs7K-LYk=s256-rw",   url: "game.html?id=space-rush"   },
+  { name: "Pixel Quest",   icon: "images/icon-pixel-quest.png",  url: "game.html?id=pixel-quest"  },
+  { name: "Neon Runner",   icon: "images/icon-neon-runner.png",  url: "game.html?id=neon-runner"  },
+];
+
+const yandexGames = [
+  { name: "Crystal Drop",  icon: "images/icon-crystal-drop.png", url: "game.html?id=crystal-drop" },
+  { name: "Dungeon Keys",  icon: "images/icon-dungeon-keys.png", url: "game.html?id=dungeon-keys" },
+  { name: "Star Catcher",  icon: "images/icon-star-catcher.png", url: "game.html?id=star-catcher" },
+  { name: "Block Party",   icon: "images/icon-block-party.png",  url: "game.html?id=block-party"  },
+];
+
+function renderGames(games, containerId) {
+  const grid = document.getElementById(containerId);
+  games.forEach(g => {
+    const a = document.createElement('a');
+    a.href = g.url;
+    a.className = 'game-card';
+
+    // иконка — картинка, при ошибке показываем заглушку
+    a.innerHTML = `
+      <img class="game-icon-img" src="${g.icon}" alt="${g.name}"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="game-icon-placeholder" style="display:none;">🎮</div>
+      <div class="game-name">${g.name}</div>
+      <div class="game-badge">About →</div>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+renderGames(androidGames, 'android-grid');
+renderGames(yandexGames,  'yandex-grid');
+</script>
 </body>
 </html>
