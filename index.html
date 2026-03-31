@@ -96,8 +96,8 @@
   <section class="games-section yandex-section reveal" id="yandex">
     <div class="section-header">
       <!-- <div class="section-icon yandex-icon">🎯</div> -->
-      <h2 class="section-title">Web</h2>
-      <div class="section-line"></div>
+      <!--<h2 class="section-title">Web</h2>
+      <div class="section-line"></div>-->
     </div>
     <div class="game-grid" id="yandex-grid"></div>
   </section>
@@ -120,17 +120,16 @@
    Ссылка ведёт на страницу описания игры.
 */
 const androidGames = [
+  { name: "Country Colors Quiz",   icon: "country-colors-quiz/flagquiz_icon.png",  url: "country-colors-quiz/game.html"  },
   { name: "Maestro Millionaire Quiz",   icon: "maestro-millionaire-quiz/playstore-icon.png",  url: "maestro-millionaire-quiz/game.html"  },
-  { name: "Panda Ken Throwing Shuriken",    icon: "https://play-lh.googleusercontent.com/DRTTG5JP9V59y7rA54T86a6HC7Q-eor7kys1sVml_LeLGIEzAaCvbj64M-ALs7K-LYk=s256-rw",   url: "game.html?id=space-rush"   },
-  { name: "Pixel Quest",   icon: "images/icon-pixel-quest.png",  url: "game.html?id=pixel-quest"  },
-  { name: "Neon Runner",   icon: "images/icon-neon-runner.png",  url: "game.html?id=neon-runner"  },
+  { name: "Panda Ken Throwing Shuriken",    icon: "panda-ken-throwing-shuriken/pandaken.png",   url: "panda-ken-throwing-shuriken/game.html"   }
 ];
 
 const yandexGames = [
-  { name: "Crystal Drop",  icon: "images/icon-crystal-drop.png", url: "game.html?id=crystal-drop" },
+ /* { name: "Crystal Drop",  icon: "images/icon-crystal-drop.png", url: "game.html?id=crystal-drop" },
   { name: "Dungeon Keys",  icon: "images/icon-dungeon-keys.png", url: "game.html?id=dungeon-keys" },
   { name: "Star Catcher",  icon: "images/icon-star-catcher.png", url: "game.html?id=star-catcher" },
-  { name: "Block Party",   icon: "images/icon-block-party.png",  url: "game.html?id=block-party"  },
+  { name: "Block Party",   icon: "images/icon-block-party.png",  url: "game.html?id=block-party"  },*/
 ];
 
 function renderGames(games, containerId) {
